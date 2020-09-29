@@ -1,0 +1,101 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xxx-large;
+    font-family: "Bubblegum Sans";
+    font-variant: normal; font-weight: 700;
+    text-shadow: -1px -1px 0 #dac292, 1px -1px 0 #dac292,	-1px 1px 0 #dac292, 1px 1px 0 #dac292;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: rgb(240, 240, 240);
+}
+
+td {
+  text-align: left;
+  height:75px;
+  width:75px
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #BA55D3;
+  text-indent: 25px;
+}
+
+tr:nth-child(even) { background-color: #FFFAF0;}
+
+
+img
+{
+    width: 100%;
+    height: auto;
+}
+
+.round
+{
+    border-radius : 8px;
+}
+
+body {
+  padding: 25px;
+  color: black;
+  font-size: 25px;
+  --stripe: #cfd8dc;
+  --bg: #e1e1e1;
+
+  background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, var(--bg) 25%, transparent 25%),
+    linear-gradient(45deg, var(--bg) 25%, transparent 25%);
+  background-size: 100px 100px;
+  background-color: var(--stripe);
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+ul {
+  list-style-image:url('donald.gif');
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.grid-item {
+  text-align: center;
+}

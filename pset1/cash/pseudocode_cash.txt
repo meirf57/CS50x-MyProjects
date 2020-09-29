@@ -1,0 +1,4 @@
+To do for cash1:
+    1. prompt for a float and save to calc later the change
+    2. make sure the prompt returns a positive number
+    3. final output should be an int with \n

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+<table>
+    <tr>
+        <th>
+            <h2>{{n}}:</h2>
+        </th><th></th>
+    </tr>
+    <tr>
+        <td>
+            <br><br>
+            <h4> {{r}}</h4>
+            <h4>Genre: {{g}}</h4>
+            <br>
+            <h4>Rating: {{v}}</h4>
+            <br><br>
+            <p>{{p}}</p>
+            <br><br>
+            Click here for YouTube <a target="_blank" href="https://www.youtube.com/results?search_query={{n}}+trailer">Trailer</a>.
+
+        </td>
+        <td>
+            <a target="_blank" href={{i}}>
+                <img src= {{ i }} alt="Movie Poster" width="600" height="400">
+            </a>
+         </td>
+    </tr>
+</table>
+<br>
+<form action="/add" method="post">
+    <button class="btn btn-primary" type="submit">Add to Viewed</button>
+</form>
+<br><br>
+<h5>
+    Other movies by {{d}}
+</h5>
+<table>
+    <tr>
+        <div>
+        {% for i in my_i %}
+        <td>
+            <img src= {{ i }} alt="Movie Poster" width="600" height="400">
+        </td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for z in my_t %}
+        <td style = "text-align: center;">
+            {{ z }}
+        </td>
+
+        {% endfor %}
+        </div>
+    </tr>
+</table>
+{% endblock %}

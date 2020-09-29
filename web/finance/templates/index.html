@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<table>
+    <tr>
+        {% for txt in title %}
+        <th>
+            <h5>{{ txt }}</h5>
+        </th>
+        {% endfor %}
+    </tr>
+    {% for x in mydict %}
+    <tr>
+        {% for x in mydict[x] %}
+        <td>
+            {{x}}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

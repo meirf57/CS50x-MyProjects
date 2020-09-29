@@ -1,0 +1,10 @@
+
+For this project mario1:
+    1. make a prompt that should take a positive int (1-8) to know how many to print
+    2. make a for loop that prints for the number given half a triangle in reverse
+    2.5 had to make a for loop+ adding space (then another forloop for #) finish first with new line
+    
+for mario2:
+    1. make a prompt similar to mario.1
+    2. make a loop that will mirror with a space the for loop in mario1
+    2.5 no whitespace neede after the second pyramid

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+
+
+
+
+<table>
+    <tr>
+        <div>
+        {% for i in my_i %}
+        <td>
+            <img src= {{ i }} alt="Movie Poster" width="600" height="400">
+        </td>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for z in my_t %}
+        <td style = "text-align: center;">
+            {{ z }}
+        </td>
+
+        {% endfor %}
+        </div>
+    </tr>
+</table>
+<form action="/my_views" method="post">
+    <br><br>
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Movie Title" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Remove</button>
+</form>
+
+
+{% endblock %}

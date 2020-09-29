@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>My Webpage 2</title>
+        <script>
+            let counter = 0;
+
+            function like()
+            {
+                counter++;
+                document.querySelector('#result').innerHTML = counter;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Pictures I Took</h1>
+        <table>
+            <tr>
+                <td>
+                    <a target="_blank" href="beach2.jpg">
+                        <img class = "round" src="beach2.jpg" alt="image of mountains" width="600" height="400">
+                    </a>
+                </td>
+                <td>
+                    <a target="_blank" href="beach3.jpg">
+                        <img src="beach3.jpg" alt="image of mountains" width="600" height="400">
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a target="_blank" href="beach4.jpg">
+                        <img src="beach4.jpg" alt="image of mountains" width="600" height="400">
+                    </a>
+                </td>
+                <td>
+                    <a target="_blank" href="beach1.jpg">
+                        <img src="beach1.jpg" alt="image of mountains" width="600" height="400">
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <h4> Likes: </h4>
+        <form onsubmit = "like(); return false;">
+             <input type = "submit">
+        </form>
+        <div id = "result">
+            0
+         </div>
+        <h4>
+            Back <a href = "index.html"> Home </a>
+        </h4>
+
+    </body>
+</html>

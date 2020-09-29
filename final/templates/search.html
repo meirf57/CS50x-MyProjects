@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+<form action="/search" method="post">
+    <br><br>
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Movie Title" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">SEARCH</button>
+    <br><br>
+    <p>* make sure to type title correctly</p>
+</form>
+{% endblock %}
