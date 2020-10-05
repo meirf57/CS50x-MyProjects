@@ -33,11 +33,6 @@ int main(void)
             printf("#");
         }
         
-                for (int z = height; z > x; z -= 1) // z is the space in row
-        {
-            printf("0"); 
-        }
-        
         printf("\n");
     }
 }
