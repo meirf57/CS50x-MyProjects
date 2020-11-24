@@ -99,3 +99,16 @@ ul {
 .grid-item {
   text-align: center;
 }
+.card-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+margin: 0 auto;
+background-color: rgb(95, 95, 255);
+}
+.card {
+width: 18rem;
+margin: 12px;
+background-color: rgb(255, 255, 255);
+box-shadow: 0 0 12px rgb(63, 63, 63);
+}

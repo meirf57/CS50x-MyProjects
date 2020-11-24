@@ -3,28 +3,19 @@
 
 {% block main %}
 
+<div class="card-container">
+     {% for movie in my_movies %}
+    <div class="card">
+      <img class="card-img-top" src= "{{ movie.image }}" alt="Card image cap">
+      <div class="card-body">
+        <p class="card-text">{{ movie.title }}</p>
+      </div>
+    </div>
+    {% endfor %}
+</div>
 
+<br>
 
-
-<table>
-    <tr>
-        <div>
-        {% for i in my_i %}
-        <td>
-            <img src= {{ i }} alt="Movie Poster" width="600" height="400">
-        </td>
-        {% endfor %}
-    </tr>
-    <tr>
-        {% for z in my_t %}
-        <td style = "text-align: center;">
-            {{ z }}
-        </td>
-
-        {% endfor %}
-        </div>
-    </tr>
-</table>
 <form action="/my_views" method="post">
     <br><br>
     <div class="form-group">

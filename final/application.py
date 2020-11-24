@@ -37,106 +37,115 @@ Session(app)
 db = SQL("sqlite:///watched.db")
 
 
-
+# when user logs in render homepage
 @app.route("/")
 @login_required
 def layout():
     user_id = session["user_id"]
     rows = db.execute("SELECT username FROM users WHERE id = :user_id",user_id=user_id)
-    z = []
-    for x in rows:
-        i = x['username']
-        z.append(i)
-    name = z[0]
+    name = rows[0].get('username')
     txt = "Welcome " + name.capitalize() +  "!"
     return render_template("layout.html", txt=txt)
 
 
+# search movies
 @app.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
-
+    # if method is get
     if request.method == "GET":
         return render_template("search.html")
-
+    # if method is post
     else:
+        # get movie data save global as "check"
         global check
         check = lookup(request.form.get("title"))
         if check == None:
-            '''result = check_db("movies.db", 'SELECT title FROM movies JOIN ratings ON movies.id = ratings.movie_id WHERE id IN (SELECT movie_id FROM stars WHERE person_id IN (SELECT id FROM people WHERE name = "Chadwick Boseman") ) ORDER BY rating DESC LIMIT 5')
-            for x in result:
-                print(x)'''
             return apology("Title not found", 403)
+        # make dict with movie data
         else:
-            n = check["name"]
-            r = check["year"] +" - "+ check["run"][-4:]
-            p = check["plot"]
-            i = check["img"]
-            g = check["genre"]
-            v = check["rating"]
-            d = check['director']
-            movie = []
+            movie = {
+            'name': check["name"],
+            'run': check["year"] +" - "+ check["run"][-4:],
+            'plot': check["plot"],
+            'img': check["img"],
+            'genre': check["genre"],
+            'rating': check["rating"],
+            'director': check['director']}
+            # get other movie options from same director
+            movies = []
             txt = 'SELECT title FROM movies JOIN ratings ON movies.id = ratings.movie_id WHERE id IN (SELECT movie_id FROM directors WHERE person_id IN (SELECT id FROM people WHERE name == "{}") ) ORDER BY rating DESC LIMIT 5'
-            result = check_db("movies.db", txt.format(d))
-            for z in result:
-                movie.append(z[0])
-            my_i = []
-            my_t = []
-            for x in movie:
-                o = lookup(x)
-                img = o['img']
-                title = o['name']
-                my_i.append(img)
-                my_t.append(title)
+            result = check_db("movies.db", txt.format(movie.get('director')))
+            # save results in list
+            for r in result:
+                movies.append(r[0])
+            # lookup movies and save data in list as dict
+            director_movies = []
+            for x in movies:
+                movie_dict = {"img": "", "title":""}
+                look = lookup(x)
+                movie_dict["img"] = look['img']
+                movie_dict["title"] = look['name']
+                director_movies.append(movie_dict)
+
+            # return and render data
+            return render_template("movie_r.html", movie=movie, director_movies=director_movies)
 
 
-        return render_template("movie_r.html", n=n,r=r,p=p,i=i,g=g,v=v,d=d, my_i=my_i,my_t=my_t)
-
-
+# personalized list of movies
 @app.route("/my_views", methods=["GET", "POST"])
 @login_required
 def my_views():
-
+    # if method is get
     if request.method == "GET":
         user_id = session["user_id"]
-        row = db.execute("SELECT * FROM viewed WHERE user_id == (:user_id)", user_id=user_id)
-        my_i = []
-        my_t = []
-        for z in row:
-            img = z['poster']
-            title = z['title']
-            my_i.append(img)
-            my_t.append(title)
 
-        #pp.pprint(my_dict)
-        return render_template("my_views.html", my_i=my_i,my_t=my_t)
+        # get movie data of user
+        row = db.execute("SELECT * FROM viewed WHERE user_id == (:user_id)", user_id=user_id)
+        my_movies = []
+        for r in row:
+            dict_movies = {"title": "", "image": ""}
+            dict_movies["image"] = r['poster']
+            dict_movies["title"] = r['title']
+            my_movies.append(dict_movies)
+
+        # return data of all movies saved
+        return render_template("my_views.html", my_movies=my_movies)
+    # method is post
     else:
+        # if no input
         if not request.form.get("title"):
             return apology("must provide Title", 403)
 
+        # get user input
         user_id = session["user_id"]
         title = request.form.get("title")
 
+        # get data from user
         rows = db.execute("SELECT * FROM viewed WHERE user_id == (:user_id)", user_id=user_id)
 
         values = []
 
+        # make list of all movie titles
         for z in rows:
             t = z['title']
             if t not in values:
                 values.append(t)
 
+        # if input not in saved movie titles
         if title.title() not in values:
             txt = "Title not found in my views, input: ({})."
             return apology(txt.format(title), 402)
-
+        # remove movie as requested
         else:
             db.execute("DELETE FROM viewed WHERE (title = :title) AND (user_id = :user_id) ", title=title.title(),user_id=user_id)
         return redirect("/")
 
 
+# add movie to list
 @app.route("/add", methods=["GET", "POST"])
 def add():
+    # if method is post get data from global "check"
     if request.method == "POST":
         user_id = session["user_id"]
         title = check["name"]
@@ -144,16 +153,18 @@ def add():
         genre = check["genre"]
         rows = db.execute("SELECT * FROM viewed WHERE user_id == (:user_id)", user_id=user_id)
         values = []
+        # make temp list of current values in db
         for z in rows:
             seen = z['title']
             if seen not in values:
                 values.append(seen)
+        # if movie already exists in db return apology
         if title in values:
             return apology("Already in your watched list", 456)
 
+        # save new movie
         db.execute("INSERT INTO viewed (title, poster, genre, user_id) VALUES (:title, :poster, :genre, :user_id) ", title=title,poster=poster,genre=genre,user_id=user_id)
         return render_template("my_views.html")
-
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -202,7 +213,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
 
 
 @app.route("/register", methods=["GET", "POST"])
